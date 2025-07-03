@@ -1,14 +1,13 @@
 services:
   resourcespace:
     build: .
-    container_name: resourcespace
     restart: unless-stopped
     depends_on:
       - mariadb
     volumes:
-      - include:/var/www/html/include
-      - filestore:/var/www/html/filestore
-      - ./testdir:/srv/storage/testdir
+      - ./data/resourcespace/include:/var/www/html/include
+      - ./data/resourcespace/filestore:/var/www/html/filestore
+      - ./data/resourcespace/testdir:/srv/storage/testdir
     networks:
       - frontend
       - backend
@@ -17,20 +16,14 @@ services:
 
   mariadb:
     image: mariadb
-    container_name: mariadb
     restart: unless-stopped
     env_file:
-      - db.env
+      - .env
     volumes:
-      - mariadb:/var/lib/mysql
+      - ./data/mariadb:/var/lib/mysql
     networks:
       - backend
 
 networks:
   frontend:
   backend:
-
-volumes:
-  mariadb:
-  include:
-  filestore:

@@ -1,10 +1,8 @@
 FROM ubuntu:24.04
 
-LABEL org.opencontainers.image.authors="Montala Ltd"
-
 ENV DEBIAN_FRONTEND="noninteractive"
 
-RUN apt-get update && apt-get install -y \
+RUN apt-get update && apt-get install -y --no-install-recommends \
     nano \
     imagemagick \
     apache2 \
@@ -41,10 +39,10 @@ RUN sed -i -e "s/upload_max_filesize\s*=\s*2M/upload_max_filesize = 100M/g" /etc
 
 RUN printf '<Directory /var/www/>\n\
 \tOptions FollowSymLinks\n\
-</Directory>\n'\
->> /etc/apache2/sites-enabled/000-default.conf
+</Directory>\n'\ >> /etc/apache2/sites-enabled/000-default.conf
 
-ADD cronjob /etc/cron.daily/resourcespace
+COPY cronjob /etc/cron.daily/resourcespace
+RUN chmod +x /etc/cron.daily/resourcespace
 
 WORKDIR /var/www/html
 
@@ -53,5 +51,7 @@ RUN rm -f index.html \
  && mkdir -p filestore \
  && chmod 777 filestore \
  && chmod -R 777 include/
+
+EXPOSE 80
 
 CMD apachectl -D FOREGROUND
