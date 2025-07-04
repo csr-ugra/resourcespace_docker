@@ -5,6 +5,7 @@ ENV DEBIAN_FRONTEND="noninteractive"
 RUN apt-get update && apt-get install -y --no-install-recommends \
     nano \
     imagemagick \
+	inkscape \
     apache2 \
     subversion \
     ghostscript \
@@ -23,6 +24,13 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     php-mysqlnd \
     php-mbstring \
     php-zip \
+	php-mysqli \
+	php-dom \
+	php-xml \
+	php-ldap \
+	php-imap \
+	php-json \
+	php-cli \
     libapache2-mod-php \
     ffmpeg \
     libopencv-dev \
@@ -47,7 +55,7 @@ RUN chmod +x /etc/cron.daily/resourcespace
 WORKDIR /var/www/html
 
 RUN rm -f index.html \
- && svn co -q https://svn.resourcespace.com/svn/rs/releases/10.6 . \
+ && svn co -q https://svn.resourcespace.com/svn/rs/releases/10.5 . \
  && mkdir -p filestore \
  && chmod 777 filestore \
  && chmod -R 777 include/
