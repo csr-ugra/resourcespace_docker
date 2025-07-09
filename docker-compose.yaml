@@ -24,6 +24,25 @@ services:
     networks:
       - backend
 
+  ai-faces:
+    build: ./InsightFace
+    depends_on:
+      - mariadb
+    ports:
+      - "8001:8001"
+    env_file:
+      - .env
+    volumes:
+      - ./data/ai-faces:/root/.insightface/models
+    command:
+      [
+        "python3",
+        "/app/faces_service.py",
+        "--db-host=mariadb",
+        "--db-user=${MYSQL_USER}",
+        "--db-pass=${MYSQL_PASSWORD}",
+      ]
+
 networks:
   frontend:
   backend:

@@ -1,0 +1,8 @@
+fastapi
+uvicorn
+insightface
+onnxruntime
+faiss-cpu
+opencv-python-headless
+python-multipart
+mysql-connector-python
