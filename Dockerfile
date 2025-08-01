@@ -64,8 +64,8 @@ RUN rm -f index.html \
 # make php_curl use proxy env var
 RUN sed -i "265a \    \$openai_gpt_proxy_url = getenv('OPENAI_PROXY_URL');" /var/www/html/plugins/openai_gpt/include/openai_gpt_functions.php \
 	&& sed -i "266a \    \$openai_gpt_proxy_userpwd = getenv('OPENAI_PROXY_USERPWD');" /var/www/html/plugins/openai_gpt/include/openai_gpt_functions.php \
-	&& sed -i "278a \        \CURLOPT_PROXY => $openai_gpt_proxy_url," /var/www/html/plugins/openai_gpt/include/openai_gpt_functions.php \
-	&& sed -i "279a \        \CURLOPT_PROXYUSERPWD => $openai_gpt_proxy_userpwd," /var/www/html/plugins/openai_gpt/include/openai_gpt_functions.php
+	&& sed -i "278a \        \CURLOPT_PROXY => \$openai_gpt_proxy_url," /var/www/html/plugins/openai_gpt/include/openai_gpt_functions.php \
+	&& sed -i "279a \        \CURLOPT_PROXYUSERPWD => \$openai_gpt_proxy_userpwd," /var/www/html/plugins/openai_gpt/include/openai_gpt_functions.php
 
 EXPOSE 80
 
